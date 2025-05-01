@@ -1,4 +1,5 @@
 ﻿global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using System.Linq.Expressions;
 global using Wallet.Domain.Common;
 global using Wallet.Domain.Entities;
