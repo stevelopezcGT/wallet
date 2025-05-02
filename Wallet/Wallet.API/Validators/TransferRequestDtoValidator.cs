@@ -5,7 +5,6 @@ public class TransferRequestDtoValidator : AbstractValidator<TransactionRequestD
     public TransferRequestDtoValidator()
     {
         RuleFor(m => m.TransactionType)
-            .NotEmpty()
             .IsInEnum()
             .WithMessage(LanguageConst.InvalidTransactionType);
 

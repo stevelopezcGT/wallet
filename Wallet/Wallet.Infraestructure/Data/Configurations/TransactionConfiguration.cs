@@ -6,7 +6,7 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
     {
         builder.Property(e => e.Amount)
             .HasColumnType("decimal(18,2)")
-            .HasDefaultValue(0)
+            .HasDefaultValue(0m)
             .HasPrecision(18, 2)
             .IsRequired();
     }

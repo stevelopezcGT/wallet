@@ -4,12 +4,15 @@ public class WalletService : IWalletService
 {
     private readonly IWalletRepository _walletRepository;
 
+    private readonly ITransactionRepository _transactionRepository;
+
     private readonly IMapper _mapper;
 
-    public WalletService(IWalletRepository walletRepository, IMapper mapper)
+    public WalletService(IWalletRepository walletRepository, IMapper mapper, ITransactionRepository transactionRepository)
     {
         _walletRepository = walletRepository;
         _mapper = mapper;
+        _transactionRepository = transactionRepository;
     }
 
     public async Task<Domain.Entities.Wallet> Create(Domain.Entities.Wallet wallet)
@@ -20,7 +23,19 @@ public class WalletService : IWalletService
 
         wallet.CreatedAt = DateTime.Now;
         wallet.UpdatedAt = DateTime.Now;
-        return await _walletRepository.AddAsync(wallet);
+        await _walletRepository.AddAsync(wallet);
+
+        var transaction = new Domain.Entities.Transaction
+        {
+            Amount = wallet.Balance,
+            Type = TransactionType.Credit,
+            WalletId = wallet.Id,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        };
+
+        await _transactionRepository.AddAsync(transaction);
+        return wallet;
     }
 
     public async Task Delete(int id)
@@ -28,6 +43,15 @@ public class WalletService : IWalletService
         var wallet = await _walletRepository.GetByIdAsync(id);
         if (wallet is not null)
         {
+            var transactions = await _transactionRepository.GetAllIncludingAsync(x => x.WalletId == id);
+            if (transactions is not null)
+            {
+                foreach (var transaction in transactions)
+                {
+                    await _transactionRepository.RemoveAsync(transaction);
+                }
+            }
+
             await _walletRepository.RemoveAsync(wallet);
             return;
         }
@@ -84,9 +108,34 @@ public class WalletService : IWalletService
 
             current.Balance += transactionRequest.Amount * (transactionRequest.TransactionType == TransactionType.Debit ? -1 : 1);
             current.UpdatedAt = DateTime.Now;
-            return await _walletRepository.UpdateAsync(current);
+            await _walletRepository.UpdateAsync(current);
+
+            var transaction = new Domain.Entities.Transaction
+            {
+                Amount = transactionRequest.Amount,
+                Type = transactionRequest.TransactionType,
+                WalletId = walletId,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
+            await _transactionRepository.AddAsync(transaction);
+
+            return current;
         }
 
         throw new NotFoundException(nameof(Domain.Entities.Wallet), walletId);
+    }
+
+    public async Task<Domain.Entities.Wallet> GetHistoryById(int id)
+    {
+        var current = await _walletRepository.GetByIdIncludingAsync(id, d => d.Transactions);
+
+        if (current is not null)
+        {
+            return current;
+        }
+
+        throw new NotFoundException(nameof(Domain.Entities.Wallet), id);
     }
 }

@@ -6,4 +6,6 @@
 public interface IWalletService : IService<Wallet.Domain.Entities.Wallet>
 {
     Task<Domain.Entities.Wallet> Transaction(int WalletId, TransactionRequestDto transactionRequest);
+
+    Task<Domain.Entities.Wallet> GetHistoryById(int id);
 }

@@ -121,4 +121,18 @@ public class WalletsController : ControllerBase
         var wallet = await _walletService.Transaction(walletId, transferDto);
         return Ok(_mapper.Map<WalletDto>(wallet));
     }
+
+    [HttpGet]
+    [Route("{walletId}/history")]
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WalletDto))]
+    [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorDetails), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> History(int walletId)
+    {
+        var wallet = await _walletService.GetHistoryById(walletId);
+        return Ok(_mapper.Map<WalletDto>(wallet));
+    }
 }

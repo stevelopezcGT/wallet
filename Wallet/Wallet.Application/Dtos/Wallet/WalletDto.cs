@@ -34,4 +34,6 @@ public class WalletDto
     /// Gets or sets the date and time when the wallet was last updated.
     /// </summary>
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
+    public List<TransactionDto> Transactions { get; set; } = [];
 }
