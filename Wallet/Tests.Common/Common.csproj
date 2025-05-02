@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+
+		  <RootNamespace>Wallet.Tests.Common</RootNamespace>
+		  <AssemblyName>Wallet.Tests.Common</AssemblyName>
+	  
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Bogus" Version="35.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Wallet.Application\Application.csproj" />
+    <ProjectReference Include="..\Wallet.Domain\Domain.csproj" />
+    <ProjectReference Include="..\Wallet.Infraestructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
