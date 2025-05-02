@@ -5,7 +5,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.HasData(
-            new User { UserName = "walletUser", Password = "passwordC0mplex", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
+            new User { Id = 1, UserName = "walletUser", Password = "passwordC0mplex", CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
             );
     }
 }

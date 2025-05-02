@@ -36,7 +36,7 @@ public class NotFoundException : BusinessException
     /// <param name="name">The name of the entity that was not found.</param>
     /// <param name="key">The key of the entity that was not found.</param>
     public NotFoundException(string name, object key)
-        : base($"Entity \"{name}\" ({key}) was not found.")
+        : base($"Entidad \"{name}\" ({key}) no fue encontrado.")
     {
     }
 }

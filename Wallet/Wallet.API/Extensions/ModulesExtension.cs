@@ -1,12 +1,11 @@
-﻿using AutoMapper;
-using Wallet.Application;
-
-namespace Wallet.Api.Extensions;
+﻿namespace Wallet.Api.Extensions;
 
 public static class ModulesExtension
 {
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IWalletService, WalletService>();
         return services;
     }
 
@@ -14,14 +13,17 @@ public static class ModulesExtension
     {
         services.AddScoped<IWalletRepository, WalletRepository>();
         services.AddScoped<ITransactionRepository, TransactionRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
 
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
-        //services.AddScoped<IValidator<RegisterDto>, RegisterValidator>();
-        //services.AddScoped<IValidator<LoginInputDto>, LoginInputDtoValidator>();
+        services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
+        services.AddScoped<IValidator<CreateWalletDto>, CreateWalletDtoValidator>();
+        services.AddScoped<IValidator<UpdateWalletDto>, UpdateWalletDtoValidator>();
+        services.AddScoped<IValidator<TransactionRequestDto>, TransferRequestDtoValidator>();
         return services;
     }
 

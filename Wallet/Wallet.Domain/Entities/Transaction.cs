@@ -19,7 +19,7 @@ public class Transaction : EntityBase
     /// Gets or sets the type of the transaction.
     /// Possible values are "Credit" or "Debit".
     /// </summary>
-    public WalletType Type { get; set; } = WalletType.Credit;
+    public TransactionType Type { get; set; } = TransactionType.Credit;
 
     /// <summary>
     /// Gets or sets the wallet associated with the transaction.

@@ -1,0 +1,10 @@
+﻿global using AutoMapper;
+global using System.Security.Claims;
+global using System.Text;
+global using Wallet.Application.Common;
+global using Wallet.Application.Dtos.Wallet;
+global using Wallet.Application.Interfaces;
+global using Wallet.Domain.Common;
+global using Wallet.Domain.Entities;
+global using Wallet.Domain.Exceptions;
+global using Wallet.Domain.Interfaces;

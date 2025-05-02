@@ -1,4 +1,6 @@
-﻿namespace Wallet.Infrastructure.Data;
+﻿using System.Reflection;
+
+namespace Wallet.Infrastructure.Data;
 
 public class AppDbContext : DbContext
 {
@@ -10,6 +12,8 @@ public class AppDbContext : DbContext
 
     public DbSet<Domain.Entities.Wallet> Wallets { get; set; }
 
+    public DbSet<User> Users { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -17,5 +21,11 @@ public class AppDbContext : DbContext
             var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings:DefaultConnection");
             optionsBuilder.UseSqlServer(connectionString);
         }
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(assembly: Assembly.GetExecutingAssembly());
     }
 }

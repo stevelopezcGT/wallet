@@ -6,7 +6,6 @@ public class WalletConfiguration : IEntityTypeConfiguration<Wallet.Domain.Entiti
     {
         builder.Property(e => e.Balance)
             .HasColumnType("decimal(18,2)")
-            .HasDefaultValue(0)
             .HasPrecision(18, 2)
             .IsRequired();
     }

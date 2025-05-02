@@ -1,15 +1,15 @@
 ﻿/// <summary>
-/// Represents the type of wallet.
+/// Represents the type of transaction.
 /// </summary>
-public enum WalletType
+public enum TransactionType
 {
     /// <summary>
-    /// A wallet type that allows credit transactions.
+    /// A transaction type that allows credit transactions.
     /// </summary>
     Credit,
 
     /// <summary>
-    /// A wallet type that allows debit transactions.
+    /// A transaction type that allows debit transactions.
     /// </summary>
     Debit
 }
